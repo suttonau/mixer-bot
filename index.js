@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN } from './keys.js'
+import { ACCESS_TOKEN } from './keys'
 const Mixer = require('@mixer/client-node')
 const ws = require('ws')
 
@@ -30,8 +30,8 @@ client.request('GET', 'users/current')
 .then(resp => {
   const body = resp.body
   console.log(body)
-  debugger
-  // connect to chat
+  // Connect to chat
+  return createChatSocket(userInfo.id, userInfo.channel, body.endpoints, body.authkey)
 })
 .catch(err => {
   console.error('Something went wrong')
@@ -50,16 +50,29 @@ client.request('GET', 'users/current')
 function createChatSocket (userId, channelId, endpoints, authkey) {
   const socket = new Mixer.Socket(ws, endpoints).boot()
 
-  socket.auth(channelId, userId, authkey)
+  // Greet Users
+  socket.on('UserJoin', data => {
+    socket.call('msg', [`Hi ${data.username}, welcome to my channel!`])
+  })
+
+  // React to the !ping command
+  socket.on('ChatMessage', data => {
+    if (data.message.message[0].data.toLowerCase().startsWith('!ping')) {
+      socket.call('msg', [`@${data.user_name} PONG`])
+      console.log(`Ponged ${data.user_name}`)
+    }
+  })
+
+
+  // Handle errors
+  socket.on('error', error => {
+    console.error('Socket error')
+    console.error(error)
+  })
+
+  return socket.auth(channelId, userId, authkey)
   .then(() => {
-    console.log('Authenticated!')
-    // Send a chat message
-    return socket.call('msg', ['Welcome!'])
+      console.log('Login successful');
+      return socket.call('msg', ['Hi! I\'m SuttonDeathBot! Write !ping and I will pong back!']);
   })
-  .catch(err => {
-    console.error('An error occured!')
-    console.error(err)
-  })
-
-
 }
