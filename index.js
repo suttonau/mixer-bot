@@ -63,7 +63,6 @@ function createChatSocket (userId, channelId, endpoints, authkey) {
     }
   })
 
-
   // Handle errors
   socket.on('error', error => {
     console.error('Socket error')
