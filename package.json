@@ -1,0 +1,33 @@
+{
+  "name": "mixer-bot",
+  "version": "1.0.0",
+  "description": "mixer-bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suttonau/mixer-bot.git"
+  },
+  "author": "Sean Sutton Jr.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/suttonau/mixer-bot/issues"
+  },
+  "homepage": "https://github.com/suttonau/mixer-bot",
+  "dependencies": {
+    "eslint": "6.0.1",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.15.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "@mixer/client-node": "^3.5.0",
+    "bluebird": "^3.7.1",
+    "ws": "^7.2.0"
+  }
+}
